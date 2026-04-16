@@ -1,5 +1,6 @@
 import { useState, createContext, useContext } from "react";
 import WarningBanner from "./components/WarningBanner";
+import ConnectionDebug from "./components/ConnectionDebug";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
@@ -50,6 +51,7 @@ export default function App() {
         <Navbar />
         <main>{renderPage()}</main>
         {!["signin", "signup", "account"].includes(currentPage) && <Footer />}
+        <ConnectionDebug />
       </div>
     </AppContext.Provider>
   );

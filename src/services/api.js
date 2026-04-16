@@ -2,6 +2,8 @@
 // Configure your backend URL here
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
+console.log('🔗 API Base URL:', API_BASE_URL);
+
 // Helper function for API calls
 const apiCall = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
@@ -20,18 +22,31 @@ const apiCall = async (endpoint, options = {}) => {
     const response = await fetch(url, {
       ...options,
       headers,
-      credentials: 'include', // Send cookies
+      credentials: 'include', // Send cookies for CORS
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || 'API request failed');
+    // Log response details for debugging
+    if (!response.ok && response.status === 0) {
+      console.error('❌ CORS Error or Network Failure:', url);
+      throw new Error('CORS Error: Backend may not have CORS enabled. Check browser console for details.');
     }
 
+    let data;
+    try {
+      data = await response.json();
+    } catch (parseError) {
+      console.error('❌ Failed to parse response:', parseError);
+      throw new Error('Invalid response from server');
+    }
+
+    if (!response.ok) {
+      throw new Error(data.message || `API Error: ${response.status}`);
+    }
+
+    console.log('✅ API Success:', endpoint);
     return data;
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('❌ API Error:', endpoint, error.message);
     throw error;
   }
 };
