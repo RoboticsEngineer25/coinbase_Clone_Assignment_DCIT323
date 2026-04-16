@@ -68,9 +68,15 @@ export const authAPI = {
   getProfile: () => apiCall('/auth/profile', { method: 'GET' }),
 
   logout: () =>
-    apiCall('/auth/logout', { method: 'POST' }).then(() => {
-      localStorage.removeItem('token');
-    }),
+    apiCall('/auth/logout', { method: 'POST' })
+      .then(() => {
+        localStorage.removeItem('token');
+      })
+      .catch((err) => {
+        // Ensure token is removed even if API call fails
+        localStorage.removeItem('token');
+        throw err;
+      }),
 
   setToken: (token) => localStorage.setItem('token', token),
 

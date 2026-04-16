@@ -60,12 +60,22 @@ export const useAuth = () => {
 
   const logout = useCallback(async () => {
     try {
-      await authAPI.logout();
+      // Attempt to notify backend of logout, but don't fail if it errors
+      try {
+        await authAPI.logout();
+      } catch (err) {
+        console.warn("Backend logout failed, clearing local session:", err.message);
+      }
+      // Always clear local auth state regardless of API response
       setUser(null);
       setIsAuthenticated(false);
       authAPI.clearToken();
+      setError('');
+      return { success: true };
     } catch (err) {
-      setError(err.message);
+      const message = err.message || 'Logout failed';
+      setError(message);
+      return { success: false, error: message };
     }
   }, []);
 

@@ -110,13 +110,21 @@ export default function Navbar() {
                         onClick={async () => {
                           try {
                             const { authAPI } = await import("../../services/api");
-                            await authAPI.logout();
+                            // Try to call logout API, but don't fail if backend is down
+                            try {
+                              await authAPI.logout();
+                            } catch (apiErr) {
+                              console.warn("Logout API call failed:", apiErr.message);
+                              // Continue with logout even if API fails
+                            }
+                            // Always clear local auth state
                             authAPI.clearToken();
                             setIsSignedIn(false);
                             setUserMenuOpen(false);
                             navigate("home");
                           } catch (err) {
                             console.error("Logout failed:", err);
+                            alert("Sign out failed: " + err.message);
                           }
                         }}
                         className="flex items-center gap-3 w-full px-4 py-3 hover:bg-red-500/10 transition-colors text-left text-red-400"
