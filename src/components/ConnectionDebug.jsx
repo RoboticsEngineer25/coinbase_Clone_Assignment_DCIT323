@@ -13,6 +13,13 @@ export default function ConnectionDebug() {
       const backendUrl = import.meta.env.VITE_API_URL;
       checks.backendUrl = backendUrl || "NOT SET";
 
+      // If no backend URL, skip further checks
+      if (!backendUrl) {
+        setResults(checks);
+        setStatus("disconnected");
+        return;
+      }
+
       // Check 2: Health check
       try {
         const healthResponse = await fetch(
