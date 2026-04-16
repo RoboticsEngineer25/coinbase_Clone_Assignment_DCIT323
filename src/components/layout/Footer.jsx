@@ -75,17 +75,23 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-cb-border pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-cb-text-tertiary">© 2026 Coinbase, Inc. All rights reserved.</p>
+          <p className="text-xs text-cb-text-tertiary">© 2026 Crypto App | Student Project. All rights reserved.</p>
           <div className="flex gap-5">
             {["Privacy", "Terms", "Cookies", "Accessibility"].map((l) => (
               <span key={l} className="text-xs text-cb-text-tertiary hover:text-white cursor-pointer transition-colors">{l}</span>
             ))}
           </div>
         </div>
-        <p className="mt-6 text-xs text-cb-text-tertiary leading-relaxed">
-          Crypto is risky. Prices can go up or down. Not investment advice. Stock trading subject to regulatory approval. 
-          This is an educational clone — not the real Coinbase. Not affiliated with Coinbase Global, Inc.
-        </p>
+        <div className="border-t border-cb-border pt-6 mt-6">
+          <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-4">
+            <p className="text-xs text-red-400 leading-relaxed font-semibold mb-2">
+              ⚠️ DISCLAIMER – NOT AFFILIATED WITH COINBASE
+            </p>
+            <p className="text-xs text-red-400/80 leading-relaxed">
+              This is an educational student project and is <strong>NOT affiliated with, endorsed by, or associated with Coinbase Global, Inc.</strong> This is a demo application created for learning purposes only. Do not enter real personal information, passwords, or payment details. Cryptocurrency is a high-risk investment. Do not use this app for real trading. Not investment advice.
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
   );

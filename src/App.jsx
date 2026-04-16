@@ -1,4 +1,5 @@
 import { useState, createContext, useContext } from "react";
+import WarningBanner from "./components/WarningBanner";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
@@ -43,6 +44,7 @@ export default function App() {
   return (
     <AppContext.Provider value={{ currentPage, navigate, isSignedIn, setIsSignedIn, watchlist, toggleWatchlist, selectedAsset }}>
       <div className="min-h-screen bg-cb-bg text-cb-text">
+        <WarningBanner />
         <Navbar />
         <main>{renderPage()}</main>
         {!["signin", "signup"].includes(currentPage) && <Footer />}

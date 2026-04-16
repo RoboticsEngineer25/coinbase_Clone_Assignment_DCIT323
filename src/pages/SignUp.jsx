@@ -52,7 +52,7 @@ export default function SignUp() {
               <path d="M8 3C5.24 3 3 5.24 3 8C3 10.76 5.24 13 8 13C9.96 13 11.66 11.92 12.56 10.32H10.28C9.68 11.08 8.9 11.5 8 11.5C6.07 11.5 4.5 9.93 4.5 8C4.5 6.07 6.07 4.5 8 4.5C8.9 4.5 9.68 4.92 10.28 5.68H12.56C11.66 4.08 9.96 3 8 3Z" fill="white"/>
             </svg>
           </div>
-          <span className="font-bold text-cb-text text-base tracking-tight">Coinbase</span>
+          <span className="font-bold text-cb-text text-base tracking-tight">Crypto App</span>
         </button>
         <button onClick={() => navigate("signin")} className="text-sm text-cb-text-secondary hover:text-cb-text transition-colors">
           Have account? <span className="text-cb-blue font-semibold">Sign in</span>
@@ -86,6 +86,11 @@ export default function SignUp() {
             <p className="text-sm text-cb-text-secondary">
               {step === 1 ? "Start your crypto journey today — it's free" : `Almost there, ${form.firstName || "there"}!`}
             </p>
+          </div>
+
+          <div className="mb-6 p-3.5 bg-orange-500/10 border border-orange-500/30 rounded-xl text-sm text-orange-400 flex items-center gap-2">
+            <span className="text-lg flex-shrink-0">📌</span>
+            <span className="font-semibold">Demo app – do not use your real password</span>
           </div>
 
           {error && (
