@@ -48,8 +48,8 @@ export default function App() {
       <div className="min-h-screen bg-cb-bg text-cb-text">
         <WarningBanner />
         <Navbar />
-        <main>{renderPage()}<, "account"/main>
-        {!["signin", "signup"].includes(currentPage) && <Footer />}
+        <main>{renderPage()}</main>
+        {!["signin", "signup", "account"].includes(currentPage) && <Footer />}
       </div>
     </AppContext.Provider>
   );
