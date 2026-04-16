@@ -10,9 +10,10 @@ const CoinbaseLogo = () => (
 );
 
 export default function Navbar() {
-  const { navigate, currentPage, isSignedIn } = useApp();
+  const { navigate, currentPage, isSignedIn, setIsSignedIn } = useApp();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const products = [
     { label: "Buy & Sell", sub: "Trade 500+ assets", icon: "↕" },
@@ -79,8 +80,56 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-2">
             {isSignedIn ? (
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-cb-blue flex items-center justify-center text-white text-xs font-bold">U</div>
-                <button onClick={() => navigate("explore")} className="btn-primary text-xs px-4 py-2">
+                {/* User menu */}
+                <div className="relative">
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="w-8 h-8 rounded-full bg-cb-blue flex items-center justify-center text-white text-xs font-bold hover:bg-cb-blue-hover transition-colors"
+                  >
+                    U
+                  </button>
+                  {userMenuOpen && (
+                    <div className="absolute top-full right-0 mt-2 w-56 bg-cb-bg-card border border-cb-border rounded-2xl shadow-2xl shadow-black/50 py-2 z-50">
+                      <button
+                        onClick={() => {
+                          navigate("account");
+                          setUserMenuOpen(false);
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-3 hover:bg-cb-bg-raised transition-colors text-left text-cb-text"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                        </svg>
+                        <div>
+                          <div className="text-sm font-semibold">Account Settings</div>
+                          <div className="text-xs text-cb-text-secondary">Manage your profile</div>
+                        </div>
+                      </button>
+                      <div className="border-t border-cb-border my-2" />
+                      <button
+                        onClick={async () => {
+                          try {
+                            const { authAPI } = await import("../../services/api");
+                            await authAPI.logout();
+                            authAPI.clearToken();
+                            setIsSignedIn(false);
+                            setUserMenuOpen(false);
+                            navigate("home");
+                          } catch (err) {
+                            console.error("Logout failed:", err);
+                          }
+                        }}
+                        className="flex items-center gap-3 w-full px-4 py-3 hover:bg-red-500/10 transition-colors text-left text-red-400"
+                      >
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" />
+                        </svg>
+                        <span className="text-sm font-semibold">Sign Out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <button onClick={() => navigate("explore")} className="bg-cb-blue text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-cb-blue-hover transition-colors">
                   Trade
                 </button>
               </div>

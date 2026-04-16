@@ -8,6 +8,7 @@ import AssetDetail from "./pages/AssetDetail";
 import Learn from "./pages/Learn";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import AccountSettings from "./pages/AccountSettings";
 
 export const AppContext = createContext();
 
@@ -37,6 +38,7 @@ export default function App() {
       case "learn":   return <Learn />;
       case "signin":  return <SignIn />;
       case "signup":  return <SignUp />;
+      case "account": return <AccountSettings />;
       default:        return <Home />;
     }
   };
@@ -46,7 +48,7 @@ export default function App() {
       <div className="min-h-screen bg-cb-bg text-cb-text">
         <WarningBanner />
         <Navbar />
-        <main>{renderPage()}</main>
+        <main>{renderPage()}<, "account"/main>
         {!["signin", "signup"].includes(currentPage) && <Footer />}
       </div>
     </AppContext.Provider>
